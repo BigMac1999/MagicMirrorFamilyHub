@@ -1,0 +1,15 @@
+[submodule "modules/MMM-Cursor"]
+	path = modules/MMM-Cursor
+	url = https://github.com/uxigene/MMM-Cursor.git
+[submodule "modules/MMM-GoogleCalendar"]
+	path = modules/MMM-GoogleCalendar
+	url = https://github.com/randomBrainstormer/MMM-GoogleCalendar.git
+[submodule "modules/MMM-CalendarExt3"]
+	path = modules/MMM-CalendarExt3
+	url = https://github.com/MMRIZE/MMM-CalendarExt3.git
+[submodule "modules/MMM-OnScreenMenu"]
+	path = modules/MMM-OnScreenMenu
+	url = https://github.com/shbatm/MMM-OnScreenMenu.git
+[submodule "modules/MMM-ProfileSwitcher"]
+	path = modules/MMM-ProfileSwitcher
+	url = https://github.com/BigMac1999/MMM-ProfileSwitcher.git

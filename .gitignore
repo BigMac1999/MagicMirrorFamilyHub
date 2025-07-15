@@ -73,6 +73,7 @@ Temporary Items
 # Ignore users config file but keep the sample.
 /config/*
 !/config/config.js.sample
+!/config/config.js.template
 
 # Vim
 ## swap
@@ -90,3 +91,6 @@ js/positions.js
 # Ignore lock files other than package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+#Ignore the settings.ps1 file
+settings.ps1
