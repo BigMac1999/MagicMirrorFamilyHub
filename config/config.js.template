@@ -124,6 +124,24 @@ let config = {
                 ],
             }
         },
+        // {
+        //     module: 'MMM-ProfileSwitcher',
+        //     config: {
+        //         profiles: [
+        //             {
+        //                 name: "Default",
+        //                 icon: "user",
+        //                 modules: ["clock", "weather", "newsfeed"]
+        //             },
+        //             {
+        //                 name: "Family",
+        //                 icon: "users",
+        //                 modules: ["calendar", "compliments"]
+        //             }
+        //         ],
+        //         defaultProfile: "Default"
+        //     }
+        // }
     ]
 };
 
