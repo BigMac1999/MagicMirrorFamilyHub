@@ -33,27 +33,33 @@ let config = {
     // as we have no usage, we  have no constraints on what this field holds
     // see https://en.wikipedia.org/wiki/Locale_(computer_software) for the possibilities
 
-    logLevel: ["INFO", "LOG", "WARN", "ERROR"], // Add "DEBUG" for even more logging
+    logLevel: ["INFO", "LOG", "WARN", "ERROR", "DEBUG"], // Add "DEBUG" for even more logging
     timeFormat: 24,
     units: "metric",
 
     modules: [
+        // Alert Module
         {
             module: "alert",
         },
+        // Updatenotification Module
         {
             module: "updatenotification",
             position: "top_bar"
         },
+        // Clock Module
         {
             module: "clock",
             position: "top_left"
         },
+        // Base Calendar Module
         {
             module: "calendar",
             header: "US Holidays",
             position: "top_left",
             config: {
+                broadcastEvents: true,
+                broadcastPastEvents: true,
                 calendars: [
                     {
                         fetchInterval: 7 * 24 * 60 * 60 * 1000,
@@ -63,31 +69,24 @@ let config = {
                 ]
             }
         },
+        // Compliments Module
         {
             module: "compliments",
             position: "lower_third"
         },
+        // Weather Module
         {
             module: "weather",
             position: "top_right",
-            config: {
-                weatherProvider: "openmeteo",
-                type: "current",
-                lat: 40.776676,
-                lon: -73.971321
-            }
-        },
-        {
-            module: "weather",
-            position: "top_right",
-            header: "Weather Forecast",
+            header: "House Weather Forecast",
             config: {
                 weatherProvider: "openmeteo",
                 type: "forecast",
-                lat: 40.776676,
-                lon: -73.971321
+                lat: 33.924568,
+                lon: -84.015268
             }
         },
+        // Newsfeed Module 2
         {
             module: "newsfeed",
             position: "bottom_bar",
@@ -104,44 +103,124 @@ let config = {
                 broadcastNewsUpdates: true
             }
         },
+        // Cursor Module
         {
             module: "MMM-Cursor",
             config: {
                 timeout: 1500
             }
         },
+        // Google Calendar Module
         {
             module: 'MMM-GoogleCalendar',
-            header: "My Google Private Cal",
+            header: "My Google Cal",
             position: "top_left",
             config: {
                 calendars: [
                     {
                         symbol: "calendar-week",
-                        calendarID: "${myGoogleCalendarID}"
+                        calendarID: "${myGoogleCalendarID}",
+                        name: "Google Calendar"
                     },
                     // To add more calendars, replicate the above entry within this array with the respective ID
                 ],
+                broadcastPastEvents: true, // Enable broadcasting of past events\
+                broadcastEvents: true, // Enable broadcasting of events
             }
         },
-        // {
-        //     module: 'MMM-ProfileSwitcher',
-        //     config: {
-        //         profiles: [
-        //             {
-        //                 name: "Default",
-        //                 icon: "user",
-        //                 modules: ["clock", "weather", "newsfeed"]
-        //             },
-        //             {
-        //                 name: "Family",
-        //                 icon: "users",
-        //                 modules: ["calendar", "compliments"]
-        //             }
-        //         ],
-        //         defaultProfile: "Default"
-        //     }
-        // }
+        // CalendarExt3 Module
+        {
+			module: "MMM-CalendarExt3",
+			position: "fullscreen_below",
+			title: "Home Calendar",
+			config: {
+                mode: "month",
+				fontSize: "18px",
+				maxEventLines: 4,
+				cellDateFormat: "D",
+				firstDayOfWeek: 0,
+				showWeekends: true,
+                // fetchInterval: 10 * 1000, // Fetch every 10 minutes
+                calendars: [
+                    {
+                        name: "Google Calendar"
+                    }
+                ]
+			}
+		},
+        //OnScreen Menu Module
+        {
+            module: 'MMM-OnScreenMenu',
+            position: 'bottom_right',
+            /* Valid positions: 'top_right', 'top_left', 'bottom_right', 'bottom_left' */
+            config: {
+                touchMode: true,
+                enableKeyboard: true,
+                menuItems: {
+                    monitorOff: { title: "Turn Off Monitor", icon: "television", source: "SERVER" },
+                    restart: { title: "Restart MagicMirror", icon: "recycle", source: "ALL" },
+                    refresh: { title: "Refresh MagicMirror", icon: "refresh", source: "LOCAL" },
+                    reboot: { title: "Reboot", icon: "spinner", source: "ALL" },
+                    shutdown: { title: "Shutdown", icon: "power-off", source: "ALL" },
+                    notify1: { title: "Switch to Family Screen", icon: "user", notification: "CURRENT_PROFILE", payload: "Family" },
+                    notify2: { title: "Switch to Bis Profile", icon: "user", notification: "CURRENT_PROFILE", payload: "Bis" },
+                    notify3: { title: "Switch to Jenny Profile", icon: "user-times", notification: "CURRENT_PROFILE", payload: "Jenny" },
+                    notify4: { title: "Switch to Calendar Profile", icon: "user-times", notification: "CURRENT_PROFILE", payload: "Calendar" },
+
+                },
+            }
+        },
+        // Profile Switcher Module
+        {
+            module: 'MMM-ProfileSwitcher',
+            config: {
+                defaultProfile: "Family", // Default profile to switch to when the module starts
+                ignoreModules: ["MMM-OnScreenMenu", "alert", "updatenotification"],
+                outgoingMessagesEnabled: false, // Enable outgoing messages when switching profiles
+                profiles: [
+                    {
+                        name: "Family",
+                        modules: ["compliments", "clock", "Weather", "newsfeed", "calendar"],
+                        messages: {
+                            incoming: ["Welcome back to the Family profile!"],
+                        },
+                    },
+                    {
+                        name: "Bis",
+                        modules: ["clock", "weather", "newsfeed", "MMM-GoogleCalendar"],
+                        messages: {
+                            incoming: ["Hello esteemed leader", "hi sir!"],
+                        },
+                        timer: {
+                            toProfile: "Family",
+                            time: 600000 // 10 minutes to switch to the family profile
+                        }          
+                    },
+                    {
+                        name: "Jenny",
+                        modules: ["clock", "weather", "compliments"],
+                        messages: {
+                            incoming: ["Hii my lovee", "Hi Stinky", "sup loser"],
+                        },
+                        timer: {
+                            toProfile: "Family",
+                            time: 600000 // 10 minutes to switch to the family profile
+                        }          
+                    },
+                    {
+                        name: "Calendar",
+                        modules: ["MMM-CalendarExt3"],
+                        messages: {
+                            // incoming: ["Hii my lovee", "Hi Stinky", "sup loser"],
+                        },
+                        timer: {
+                            toProfile: "Family",
+                            time: 600000 // 10 minutes to switch to the family profile
+                        }          
+                    },
+                ]
+            }
+        }
     ]
 };
 

@@ -1,0 +1,90 @@
+/* Custom styling for CalendarExt3 fullscreen mode */
+
+.MMM-CalendarExt3 {
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.CX3 {
+  --fontsize: 18px;
+  --cellheaderheight: 40px;
+  --maxeventlines: 4;
+  --eventheight: 24px;
+  font-size: var(--fontsize) !important;
+  width: 100%;
+  height: 100%;
+}
+
+.CX3 .bodice {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.CX3 .header {
+  font-size: 2.5em;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.CX3 .weekGrid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.CX3 .cell {
+  border: 1px solid #555;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+}
+
+.CX3 .cellHeader {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.CX3 .dayname {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+  background: rgba(255, 255, 255, 0.2);
+  margin-bottom: 10px;
+}
+
+.CX3 .event {
+  line-height: 16px;
+  padding: 4px 6px;
+  margin: 2px 0;
+  border-radius: 4px;
+  background: rgba(100, 150, 255, 0.8);
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-height: 20px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.CX3 .today {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border: 2px solid #4a90e2 !important;
+}
+
+.CX3 .otherMonth {
+  opacity: 0.4;
+}
